@@ -1,1 +1,11 @@
-hello word
+@GetMapping("/getCommodityInfo")
+    public String getCommodityInfo(String desci){
+        log.info("进入商品信息查询,商品: " + desci);
+        Goods commodityInfo = userService.getCommodityInfo(desci);
+        if(commodityInfo.getPid() == 0){
+            return JSON.toJSONString(commodityInfo);
+        }
+        BigDecimal seckill = getSeckill(commodityInfo.getGid());
+        commodityInfo.setPrice(seckill);
+        return JSON.toJSONString(commodityInfo);
+    }
